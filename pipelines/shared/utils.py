@@ -145,7 +145,8 @@ def parse_dt(v: Any) -> datetime | None:
     s = str(v).strip()
     if not s or s.lower() == "nan":
         return None
-    for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%d", "%d/%m/%Y %H:%M:%S", "%d/%m/%Y"):
+    for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%d", "%d/%m/%Y %H:%M:%S",
+                "%d/%m/%Y %H:%M", "%d/%m/%Y"):
         try:
             return datetime.strptime(s, fmt)
         except ValueError:
