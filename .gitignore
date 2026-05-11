@@ -9,3 +9,8 @@ service_account.json
 dashboard_observabilidade.html
 logs/pipeline_runs.json
 logs/stores_data.json
+.env
+logs/nps_payload/
+logs/vendas_payload/
+logs/nps_sql/
+logs/vendas_sql/

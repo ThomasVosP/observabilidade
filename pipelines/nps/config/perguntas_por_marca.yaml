@@ -1,0 +1,95 @@
+# Mapeamento Pergunta N → conceito canônico, por marca.
+#
+# Conceitos disponíveis:
+#   nps_geral, nps_processo_compra, nps_test_drive,
+#   nps_acessorios, nps_entrega, resposta_aberta
+#
+# Pergunta 1 = NPS Geral em TODAS as marcas (escala 0-10).
+# As demais variam — perguntas não mapeadas vão apenas para pesquisas_respostas_raw.
+
+default:
+  1: nps_geral
+
+# ── BYD ──────────────────────────────────────────────────────────────────────
+BYD:
+  1: nps_geral
+  2: nps_processo_compra
+  3: nps_test_drive
+  4: nps_acessorios
+  5: nps_entrega
+  15: resposta_aberta
+
+# ── VW (carros) ──────────────────────────────────────────────────────────────
+"VW - VOLKSWAGEN":
+  1: nps_geral
+  2: nps_processo_compra
+  3: nps_test_drive
+  15: resposta_aberta
+
+# ── VWC (caminhões) ──────────────────────────────────────────────────────────
+VWC:
+  1: nps_geral
+  2: nps_processo_compra
+  15: resposta_aberta
+
+# ── HMB - Hyundai ────────────────────────────────────────────────────────────
+"HMB - Hyundai":
+  1: nps_geral
+  2: nps_processo_compra
+  3: nps_test_drive
+  15: resposta_aberta
+
+# ── HONDA ────────────────────────────────────────────────────────────────────
+HONDA:
+  1: nps_geral
+  2: nps_processo_compra
+  3: nps_test_drive
+  15: resposta_aberta
+
+# ── AUDI ─────────────────────────────────────────────────────────────────────
+AUDI:
+  1: nps_geral
+  2: nps_processo_compra
+  3: nps_test_drive
+  15: resposta_aberta
+
+# ── VOLVO ────────────────────────────────────────────────────────────────────
+VOLVO:
+  1: nps_geral
+  2: nps_processo_compra
+  3: nps_test_drive
+  15: resposta_aberta
+
+# ── HARLEY-DAVIDSON (Test-Ride no lugar de Test-Drive) ───────────────────────
+"HARLEY-DAVIDSON":
+  1: nps_geral
+  2: nps_processo_compra
+  3: nps_test_drive
+  15: resposta_aberta
+
+# ── TRIUMPH (Test-Ride) ──────────────────────────────────────────────────────
+TRIUMPH:
+  1: nps_geral
+  2: nps_processo_compra
+  3: nps_test_drive
+  15: resposta_aberta
+
+# ── PEUGEOT / CITROEN (Lyon) ─────────────────────────────────────────────────
+PEUGEOT:
+  1: nps_geral
+  2: nps_processo_compra
+  3: nps_test_drive
+  15: resposta_aberta
+
+CITROEN:
+  1: nps_geral
+  2: nps_processo_compra
+  3: nps_test_drive
+  15: resposta_aberta
+
+# ── GAC ──────────────────────────────────────────────────────────────────────
+GAC:
+  1: nps_geral
+  2: nps_processo_compra
+  3: nps_test_drive
+  15: resposta_aberta

@@ -1,0 +1,181 @@
+# De-para de nomes de loja → loja_id (canônico em dim.lojas)
+#
+# Duas convenções diferentes:
+#   - syonet:       campo "Empresa" das Pesquisas/Reclamações no Syonet
+#   - nota_fiscal:  campo "Nome Empresa" das NFs (formato "1.1 NOME")
+#
+# A normalização é feita ANTES do lookup: strip + collapse de espaços múltiplos.
+# Acentos e maiúsculas/minúsculas são preservados como vêm da fonte.
+
+syonet:
+  # ── AUDI / Plaza ──────────────────────────────────────────────────────────
+  "Audi Center Alto da XV - Audi - Curitiba-PR":         plaza-alto-xv
+  "Audi Center Maringá - Audi - Maringá-PR":             plaza-maringa
+  "Audi Center Cascavel - Audi - Cascavel - PR":         plaza-alto-xv  # provisório: não há loja cadastrada em Cascavel; revisar
+
+  # ── BYD ───────────────────────────────────────────────────────────────────
+  "BYD Servopa - Curitiba-PR":                           byd-ctba
+  "BYD Servopa - Curitiba-PR (Mario Tourinho)":          byd-mariot
+  "BYD Servopa -  Mario Tourinho":                       byd-mariot
+  "BYD Servopa - Curitiba-PR (Portão)":                  byd-portao
+  "BYD Servopa -  Portão":                               byd-portao
+  "BYD Servopa - Maringá-PR":                            byd-mga
+  "BYD Servopa - Londrina-PR":                           byd-lda
+  "BYD Servopa - Cascavel-PR":                           byd-cwb-c
+  "BYD Servopa - Ponta Grossa-PR":                       byd-pg
+  "BYD Servopa - São Jose dos Pinhais-PR":               byd-sjp
+  "BYD Servopa - São José dos Pinhais-PR":               byd-sjp
+  "BYD Servopa - Umuarama PR":                           byd-umuarama
+  "BYD Servopa - Umuarama-PR":                           byd-umuarama
+
+  # ── GAC ───────────────────────────────────────────────────────────────────
+  "GAC Servopa - Curitiba-PR":                           gac-ctba
+  "GAC Servopa - Londrina-PR":                           gac-lda
+  "GAC Servopa - Maringá-PR":                            gac-mga
+
+  # ── HARLEY-DAVIDSON / Freedom ─────────────────────────────────────────────
+  "The One Harley Davidson Curitiba PR":                 freedom-ctba
+  "Red Wheel Harley Davidson Londrina PR":               freedom-lda
+  # Harley Ribeirão Preto fica sem mapping confirmado por enquanto
+  "Harley Davidson Ribeirão Preto":                      harley-rp
+  "Harley Ribeirão Preto":                               harley-rp
+  "Ribeirão Preto Harley Davidson Ribeirão Preto SP":    harley-rp
+
+  # ── HMB - Hyundai / Sevec (PR) e Carway (RS) ──────────────────────────────
+  "Hyundai Servopa  - Curitiba-PR (Arthur Bernardes)":   sevec-bernardes
+  "Hyundai Servopa - Curitiba-PR (Arthur Bernardes)":    sevec-bernardes
+  "Hyundai Servopa  -  Arthur Bernardes":                sevec-bernardes
+  "Hyundai Servopa  - Curitiba-PR (Marechal Floriano)":  sevec-marechal
+  "Hyundai Servopa - Curitiba-PR (Marechal Floriano)":   sevec-marechal
+  "Hyundai Servopa  -  Marechal Floriano":               sevec-marechal
+  "Hyundai Servopa - Porto Alegre-RS (Ipiranga)":        carway-ipiranga
+  "Hyundai Servopa - Porto Alegre-RS":                   carway-ipiranga
+  "Carway Ipiranga":                                     carway-ipiranga
+  "Hyundai Servopa - Canoas-RS":                         carway-canoas
+  "Hyundai Servopa - Novo Hamburgo-RS":                  carway-nh
+  "Hyundai Servopa -  Bento Gonçalves-RS":               carway-bento
+  "Hyundai Servopa - Bento Gonçalves-RS":                carway-bento
+  "Hyundai Servopa - Porto Alegre-RS (São Francisco)":   carway-sfran
+  "Hyundai Servopa - Gravataí-RS":                       carway-gravatai
+
+  # ── HONDA / Prixx ─────────────────────────────────────────────────────────
+  "Honda Servopa  - Curitiba-PR":                        prixx-mariot
+  "Honda Servopa - Curitiba-PR":                         prixx-mariot
+  "Honda Servopa - Londrina-PR":                         prixx-lda
+  "Honda Servopa - Maringá-PR":                          prixx-mga
+  "Honda Servopa - São José dos Pinhais-PR":             prixx-sjp
+
+  # ── PEUGEOT-CITROEN / Lyon (rebrand de Dijon) ─────────────────────────────
+  "Lyon Edu Chaves (Citroen)":                           dijon-edu
+  "Lyon Edu Chaves - Peugeot Citroen - Porto Alegre-RS": dijon-edu
+  "Lyon Ipiranga (Citroen)":                             dijon-ipiranga
+  "Lyon Ipiranga - Peugeot Citroen - Porto Alegre-RS":   dijon-ipiranga
+  "Lyon Novo Hamburgo (Citroen)":                        dijon-nh
+  "Lyon Novo Hamburgo - Peugeot Citroen - Novo Hamburgo-RS": dijon-nh
+  "Lyon Novo Hamburgo - Peugeot - Novo Hamburgo-RS":     dijon-nh
+  "Lyon Canoas (Citroen)":                               dijon-canoas
+  "Lyon Canoas - Peugeot Citroen - Canoas-RS":           dijon-canoas
+  "Lyon Canoas - Peugeot - Canoas-RS":                   dijon-canoas
+  "Lyon Ceará (Citroen)":                                dijon-ce
+
+  # ── TRIUMPH / Mavesul ─────────────────────────────────────────────────────
+  "TRIUMPH CURITIBA":                                    mavesul-mariot
+  "Mavesul Triumph Curitiba":                            mavesul-mariot
+  "Triumph North (Londrina - PR)":                       mavesul-lda
+  "Mavesul Triumph Londrina":                            mavesul-lda
+
+  # ── VOLVO / Vecodil ───────────────────────────────────────────────────────
+  "Volvo Servopa - Curitiba-PR":                         vecodil-ctba
+  "Volvo Servopa - Cascavel-PR":                         vecodil-cwb
+
+  # ── VW - VOLKSWAGEN / Servopa ─────────────────────────────────────────────
+  "Servopa Rockfeller - Volkswagen - Curitiba-PR":       servopa-matriz
+  "Servopa Maringa - Volkswagen - Maringá-PR":           servopa-mga
+  "Servopa Mario Tourinho - Volkswagen - Curitiba-PR":   servopa-mariot
+  "Servopa Pinheirinho - Volkswagen - Curitiba-PR":      servopa-pinh
+  "Servopa Pgo Oficinas - Volkswagen - Ponta Grossa-PR": servopa-pg
+  "Servopa Ponta Grossa - Volkswagen - Ponta Grossa-PR": servopa-pg
+  "Servopa Paranagua - Volkswagen - Paranaguá-PR":       servopa-png
+  "Servopa Marechal - Volkswagen - Curitiba-PR":         servopa-marechal
+  "Servopa Paranavai - Volkswagen - Paranavaí-PR":       servopa-pnv
+
+  # ── VWC (Caminhões) ───────────────────────────────────────────────────────
+  "Servopa Caminhões Curitiba - Volkswagen - Curitiba-PR": vwc-ctba
+  "Servopa Caminhões Cambé - Volkswagen - Cambé-PR":     vwc-cambe
+
+
+# Notas Fiscais — formato "<código>.<código> NOME"
+nota_fiscal:
+  # VW - Servopa
+  "1.1 SERVOPA MATRIZ":             servopa-matriz
+  "1.2 SERVOPA PINHEIRINHO":        servopa-pinh
+  "1.3 SERVOPA MARECHAL":           servopa-marechal
+  "1.4 SERVOPA PONTA GROSSA":       servopa-pg
+  "1.6 SERVOPA PARANAGUA":          servopa-png
+  "1.9 SERVOPA MARINGA":            servopa-mga
+  "1.11 SERVOPA MARIO TOURINHO":    servopa-mariot
+  "1.12 SERVOPA PARANAVAI":         servopa-pnv
+
+  # Audi - Plaza
+  "5.3 PLAZA ALTO XV":              plaza-alto-xv
+  "5.4 PLAZA MARINGA":              plaza-maringa
+
+  # Honda - Prixx
+  "10.1 PRIXX MARIO TOURINHO":      prixx-mariot
+  "10.2 PRIXX SAO JOSE":            prixx-sjp
+  "10.3 PRIXX MARINGA SHOW ROOM":   prixx-mga
+  "10.5 PRIXX LONDRINA":            prixx-lda
+
+  # Hyundai - Sevec (PR)
+  "15.1 SEVEC MARECHAL":            sevec-marechal
+  "15.2 SEVEC ARTHUR BERNARDES":    sevec-bernardes
+
+  # Hyundai - Carway (RS)
+  "16.1 CARWAY IPIRANGA":           carway-ipiranga
+  "16.2 CARWAY NOVO HAMBURGO":      carway-nh
+  "16.3 CARWAY CANOAS":             carway-canoas
+  "16.5 CARWAY BENTO GONCALVES":    carway-bento
+  "16.6 CARWAY GRAVATAI":           carway-gravatai
+  "16.7 CARWAY S FRANCA":           carway-sfran
+
+  # Peugeot-Citroen - Dijon
+  "20.1 DIJON EDU CHAVES":          dijon-edu
+  "20.2 DIJON CANOAS":              dijon-canoas
+  "20.3 DIJON IPIRANGA":            dijon-ipiranga
+  "20.4 DIJON NOVO HAMBURGO":       dijon-nh
+  "20.7 DIJON CITROEN CEARA":       dijon-ce
+
+  # BYD
+  "25.1 BYD CURITIBA":              byd-ctba
+  "25.2 BYD MARINGA":               byd-mga
+  "25.3 BYD MARIO TOURINHO":        byd-mariot
+  "25.4 BYD SAO JOSE DOS PINHAIS":  byd-sjp
+  "25.5 BYD PONTA GROSSA":          byd-pg
+  "25.6 BYD CASCAVEL":              byd-cwb-c
+  "25.7 BYD LONDRINA":              byd-lda
+  "25.8 BYD PORTAO":                byd-portao
+  "25.9 BYD AUTOPLUS UMUARAMA":     byd-umuarama
+
+  # VWC - Caminhões
+  "50.1 CAMINHOES CAMBE":           vwc-cambe
+  "50.2 CAMINHOES CURITIBA":        vwc-ctba
+
+  # Triumph - Mavesul
+  "55.1 MAVESUL MARIO TOURINHO":    mavesul-mariot
+  "55.2 MAVESUL LONDRINA":          mavesul-lda
+
+  # Harley - Freedom
+  "100.1 FREEDOM CURITIBA":         freedom-ctba
+  "100.2 FREEDOM LONDRINA":         freedom-lda
+
+  # Volvo - Vecodil
+  "300.30 VECODIL CURITIBA":        vecodil-ctba
+  "300.31 VECODIL CASCAVEL":        vecodil-cwb
+
+  # GAC
+  "400.40 GAC CURITIBA":            gac-ctba
+  "400.41 GAC LONDRINA":            gac-lda
+  "400.42 GAC MARINGA":             gac-mga
+
+  # Harley - Ribeirão Preto (SP)
+  "900.1 HARLEY RIBEIRAO PRETO":    harley-rp
