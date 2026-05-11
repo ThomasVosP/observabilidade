@@ -6,3 +6,5 @@ __pycache__/
 *.csv
 credentials.json
 service_account.json
+dashboard_observabilidade.html
+logs/pipeline_runs.json
