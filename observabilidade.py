@@ -87,9 +87,15 @@ def calc_consolidated(stores):
         },
         "vendas": {
             "total_mes": vend, "meta_mes": meta,
+            "novos":        sum(x["vendas"]["novos"] for x in s),
+            "seminovos":    sum(x["vendas"]["seminovos"] for x in s),
+            "venda_direta": sum(x["vendas"]["venda_direta"] for x in s),
             "atingimento": round(vend / meta * 100, 1) if meta else 0,
             "ticket_medio": int(fat / vend) if vend else 0,
             "faturamento": fat,
+            "faturamento_novos":     sum(x["vendas"]["faturamento_novos"] for x in s),
+            "faturamento_seminovos": sum(x["vendas"]["faturamento_seminovos"] for x in s),
+            "faturamento_vd":        sum(x["vendas"]["faturamento_vd"] for x in s),
             "por_modelo": top_models,
             "vendedores": [],
             "ciclo_medio_dias": int(_avg([x["vendas"]["ciclo_medio_dias"] for x in s])),
@@ -207,6 +213,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .kl{font-size:.73rem;color:var(--muted);margin-top:3px}
 .ks{font-size:.7rem;color:var(--muted);margin-top:2px}
 .kpi.ok .kv{color:var(--ok)} .kpi.warn .kv{color:var(--warn)} .kpi.err .kv{color:var(--err)}
+
+/* Section title within a tab */
+.sec-title{font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.05em;margin:20px 0 12px;padding-top:8px;border-top:1px solid var(--border)}
 
 /* ── Charts ── */
 .charts-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
@@ -364,8 +374,11 @@ function selectStore(id){
     el.classList.toggle('active',el.dataset.id===id));
   const s=getStore(id);
   document.getElementById('picker-btn-label').textContent=s.name;
-  document.getElementById('store-sub').textContent=
-    s.city&&s.uf?s.city+', '+s.uf:'';
+  let sub='';
+  if(s.city&&s.uf) sub=s.city+', '+s.uf;
+  if(s.brand&&s.bandeira&&s.bandeira!==s.brand) sub+=' · '+s.brand+' / bandeira '+s.bandeira;
+  else if(s.brand) sub+=' · '+s.brand;
+  document.getElementById('store-sub').textContent=sub;
   renderArea(activeArea);
 }
 
@@ -478,16 +491,25 @@ function renderVendas(s){
     :'<p style="color:var(--muted);font-size:.82rem">Visão consolidada — sem ranking individual.</p>';
   return`
   <div class="kpis">
-    ${kpi('Vendas',v.total_mes+'<span class="ku"> un</span>',hc(v.atingimento,95,80))}
+    ${kpi('Vendas Totais',fmt(v.total_mes)+'<span class="ku"> un</span>',hc(v.atingimento,95,80),'Meta: '+fmt(v.meta_mes))}
     ${kpi('Atingimento',fmtP(v.atingimento),hc(v.atingimento,95,80))}
-    ${kpi('Ticket Médio',fmtC(v.ticket_medio))}
     ${kpi('Faturamento',fmtC(v.faturamento))}
-    ${kpi('Ciclo Médio',v.ciclo_medio_dias+'d')}
+    ${kpi('Ticket Médio',fmtC(v.ticket_medio))}
+    ${kpi('Ciclo Médio',v.ciclo_medio_dias+'<span class="ku">d</span>')}
   </div>
+
+  <h3 class="sec-title">Composição das Vendas</h3>
+  <div class="kpis">
+    ${kpi('🆕 Novos (VN)',fmt(v.novos)+'<span class="ku"> un</span>','',fmtP(v.novos/v.total_mes*100)+' do total · '+fmtC(v.faturamento_novos))}
+    ${kpi('🔄 Seminovos (VU)',fmt(v.seminovos)+'<span class="ku"> un</span>','',fmtP(v.seminovos/v.total_mes*100)+' do total · '+fmtC(v.faturamento_seminovos))}
+    ${kpi('🚛 Venda Direta (VD)',fmt(v.venda_direta)+'<span class="ku"> un</span>','',fmtP(v.venda_direta/v.total_mes*100)+' do total · '+fmtC(v.faturamento_vd))}
+  </div>
+
   <div class="charts-row">
+    <div class="ccard"><h3>Mix Vendas — Novos / Seminovos / VD</h3><canvas id="ch-vnd-mix" height="200"></canvas></div>
     <div class="ccard"><h3>Vendas por Modelo</h3><canvas id="ch-vnd-mod" height="200"></canvas></div>
-    <div class="ccard"><h3>Ranking de Vendedores</h3>${tbl}</div>
-  </div>`;
+  </div>
+  <div class="ccard ccard-full" style="margin-top:16px"><h3>Ranking de Vendedores</h3>${tbl}</div>`;
 }
 
 // ── Render: CX ────────────────────────────────────────────────────────────────
@@ -596,14 +618,20 @@ function initCharts(area,s){
         options:{plugins:{legend:{display:false}},
           scales:{x:{grid:{display:false}},y:{grid:{color:'#f1f5f9'}}}}});
       break;}
-    case'vendas':
+    case'vendas':{
+      const v=s.vendas;
+      mkChart('ch-vnd-mix',{type:'doughnut',
+        data:{labels:['Novos','Seminovos','Venda Direta'],
+          datasets:[{data:[v.novos,v.seminovos,v.venda_direta],
+            backgroundColor:['#1a56db','#7c3aed','#0891b2'],borderWidth:0}]},
+        options:{cutout:'60%',plugins:{legend:{position:'bottom',labels:{boxWidth:12}}}}});
       mkChart('ch-vnd-mod',{type:'bar',
         data:{labels:Object.keys(s.vendas.por_modelo),
           datasets:[{data:Object.values(s.vendas.por_modelo),
             backgroundColor:COLORS.map(c=>c+'cc'),borderWidth:0,borderRadius:4}]},
         options:{plugins:{legend:{display:false}},
           scales:{x:{grid:{display:false}},y:{grid:{color:'#f1f5f9'}}}}});
-      break;
+      break;}
     case'cx':{
       const cx=s.cx;
       mkChart('ch-cx-comp',{type:'doughnut',
