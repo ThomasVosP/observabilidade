@@ -135,59 +135,66 @@ CSS = """
 :root{--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;--unk:#94a3b8;
   --bg:#f1f5f9;--card:#fff;--border:#e2e8f0;
   --text:#1e293b;--muted:#64748b;
-  --sb:#0f172a;--sb2:#1e293b;--sbtext:#cbd5e1;--sbact:#3b82f6}
+  --sb:#0f172a;--sbtext:#cbd5e1;--sbact:#2563eb}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   background:var(--bg);color:var(--text);height:100vh;overflow:hidden}
 
 /* App shell */
-.app{display:grid;grid-template-columns:252px 1fr;height:100vh}
+.app{display:grid;grid-template-columns:240px 1fr;height:100vh}
 
 /* ── Sidebar ── */
 .sidebar{background:var(--sb);display:flex;flex-direction:column;overflow:hidden}
-.sb-logo{padding:18px 16px 14px;border-bottom:1px solid #ffffff12}
-.sb-logo strong{display:block;color:#fff;font-size:.95rem;font-weight:700}
-.sb-logo span{font-size:.72rem;color:var(--sbtext);opacity:.7}
-.sb-search{padding:10px 12px;border-bottom:1px solid #ffffff12}
-.sb-search input{width:100%;background:#ffffff14;border:none;border-radius:6px;
-  color:#fff;font-size:.8rem;padding:6px 10px;outline:none}
-.sb-search input::placeholder{color:#ffffff55}
-.sb-nav{flex:1;overflow-y:auto;padding:8px 0}
-.sb-nav::-webkit-scrollbar{width:4px}
-.sb-nav::-webkit-scrollbar-thumb{background:#ffffff22;border-radius:2px}
-.nav-grupo{display:flex;align-items:center;gap:8px;padding:9px 16px;
-  font-size:.82rem;font-weight:600;color:var(--sbtext);cursor:pointer;
-  border-radius:6px;margin:0 8px 4px;transition:background .12s}
-.nav-grupo:hover,.nav-grupo.active{background:var(--sbact);color:#fff}
-.nav-brand{padding:6px 16px 4px;font-size:.68rem;font-weight:700;
-  color:#ffffff44;text-transform:uppercase;letter-spacing:.07em;
-  display:flex;align-items:center;justify-content:space-between;cursor:pointer;
-  user-select:none;margin-top:8px}
-.nav-brand .cnt{background:#ffffff14;color:var(--sbtext);border-radius:10px;
-  font-size:.65rem;padding:1px 6px}
-.nav-stores{overflow:hidden;max-height:0;transition:max-height .2s}
-.nav-stores.open{max-height:500px}
-.nav-store{padding:7px 16px 7px 24px;font-size:.8rem;color:var(--sbtext);
-  cursor:pointer;display:flex;align-items:center;gap:6px;border-radius:6px;
-  margin:0 8px;transition:background .12s}
-.nav-store:hover{background:#ffffff0e;color:#fff}
-.nav-store.active{background:var(--sbact);color:#fff}
-.nav-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.dot-ok{background:var(--ok)} .dot-warn{background:var(--warn)} .dot-err{background:var(--err)}
+
+.sb-logo{padding:16px 16px 12px;border-bottom:1px solid #ffffff10}
+.sb-logo strong{display:block;color:#fff;font-size:.9rem;font-weight:700;letter-spacing:-.01em}
+.sb-logo span{font-size:.68rem;color:#ffffff44}
+
+/* Store picker */
+.sb-picker{padding:10px 12px;border-bottom:1px solid #ffffff10;position:relative}
+.picker-btn{width:100%;background:#ffffff12;border:1px solid #ffffff18;border-radius:7px;
+  color:#fff;font-size:.8rem;padding:7px 10px;display:flex;align-items:center;
+  justify-content:space-between;cursor:pointer;gap:6px;text-align:left}
+.picker-btn:hover{background:#ffffff1e}
+.picker-btn .store-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.picker-btn .arrow{opacity:.5;font-size:.7rem;flex-shrink:0}
+.picker-dropdown{position:absolute;left:12px;right:12px;top:calc(100% - 2px);
+  background:#1e293b;border:1px solid #ffffff18;border-radius:7px;
+  box-shadow:0 8px 24px rgba(0,0,0,.4);z-index:100;display:none;max-height:320px;
+  overflow:hidden;flex-direction:column}
+.picker-dropdown.open{display:flex}
+.picker-search{padding:8px 10px;border-bottom:1px solid #ffffff10;flex-shrink:0}
+.picker-search input{width:100%;background:#ffffff10;border:none;border-radius:5px;
+  color:#fff;font-size:.78rem;padding:5px 8px;outline:none}
+.picker-search input::placeholder{color:#ffffff44}
+.picker-list{overflow-y:auto;flex:1}
+.picker-list::-webkit-scrollbar{width:3px}
+.picker-list::-webkit-scrollbar-thumb{background:#ffffff22}
+.picker-group{padding:5px 10px 2px;font-size:.62rem;font-weight:700;
+  color:#ffffff33;text-transform:uppercase;letter-spacing:.07em}
+.picker-item{padding:6px 10px 6px 18px;font-size:.78rem;color:var(--sbtext);
+  cursor:pointer;display:flex;align-items:center;gap:7px}
+.picker-item:hover{background:#ffffff0e;color:#fff}
+.picker-item.active{color:#fff;font-weight:600}
+.picker-item.grupo{padding-left:10px;font-weight:600;color:#fff;border-bottom:1px solid #ffffff10;margin-bottom:4px}
+
+/* ── Area nav ── */
+.sb-nav{flex:1;overflow-y:auto;padding:10px 8px}
+.sb-nav::-webkit-scrollbar{width:3px}
+.sb-nav::-webkit-scrollbar-thumb{background:#ffffff18;border-radius:2px}
+.nav-area{display:flex;align-items:center;gap:10px;padding:9px 12px;
+  font-size:.82rem;font-weight:500;color:var(--sbtext);cursor:pointer;
+  border-radius:7px;transition:background .12s;user-select:none}
+.nav-area:hover{background:#ffffff0d;color:#fff}
+.nav-area.active{background:var(--sbact);color:#fff;font-weight:600}
+.nav-area .ico{font-size:1rem;width:20px;text-align:center;flex-shrink:0}
 
 /* ── Main ── */
 .main-wrap{display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
-.store-hdr{background:var(--card);border-bottom:1px solid var(--border);padding:0 28px;flex-shrink:0}
-.store-hdr-top{padding:14px 0 0;display:flex;align-items:baseline;gap:10px}
-#store-title{font-size:1.1rem;font-weight:700}
+.main-hdr{background:var(--card);border-bottom:1px solid var(--border);
+  padding:16px 28px;flex-shrink:0;display:flex;align-items:baseline;gap:10px}
+#area-title{font-size:1.05rem;font-weight:700}
 #store-sub{font-size:.78rem;color:var(--muted)}
-.tabs{display:flex;gap:2px;padding:10px 0 0;overflow-x:auto}
-.tabs::-webkit-scrollbar{height:0}
-.tab-btn{background:none;border:none;padding:8px 14px;font-size:.82rem;font-weight:500;
-  color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;
-  white-space:nowrap;transition:all .12s}
-.tab-btn:hover{color:var(--text)}
-.tab-btn.active{color:#2563eb;border-bottom-color:#2563eb;font-weight:600}
 #content{flex:1;overflow-y:auto;padding:24px 28px}
 #content::-webkit-scrollbar{width:6px}
 #content::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}
@@ -251,7 +258,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 JS = r"""
 const COLORS=['#1a56db','#7c3aed','#0891b2','#16a34a','#ea580c','#dc2626','#f59e0b','#0d9488'];
 const chartInst={};
-let activeStore='grupo', activeTab='overview';
+let activeStore='grupo', activeArea='overview';
 
 const fmt=n=>new Intl.NumberFormat('pt-BR').format(Math.round(n));
 const fmtC=n=>'R$ '+fmt(n);
@@ -260,7 +267,7 @@ const hc=(v,ok,warn)=>v>=ok?'ok':v>=warn?'warn':'err';
 const npsScore=cx=>cx.pesquisas_respondidas>0?Math.round((cx.promotores-cx.detratores)/cx.pesquisas_respondidas*100):0;
 
 function storeHealth(s){
-  const atg=s.vendas.atingimento, nps=npsScore(s.cx), mg=s.financeiro.pct_margem;
+  const atg=s.vendas.atingimento,nps=npsScore(s.cx),mg=s.financeiro.pct_margem;
   if(atg<75||nps<10||mg<5) return'err';
   if(atg<90||nps<30||mg<8) return'warn';
   return'ok';
@@ -270,62 +277,96 @@ function destroyCharts(){
   Object.values(chartInst).forEach(c=>{try{c.destroy()}catch(e){}});
   Object.keys(chartInst).forEach(k=>delete chartInst[k]);
 }
-
 function mkChart(id,cfg){
-  const el=document.getElementById(id);
-  if(!el) return;
-  if(chartInst[id]) chartInst[id].destroy();
+  const el=document.getElementById(id);if(!el)return;
+  if(chartInst[id])chartInst[id].destroy();
   chartInst[id]=new Chart(el.getContext('2d'),cfg);
 }
 
-// ── Sidebar ──────────────────────────────────────────────────────────────────
-function buildSidebar(){
-  const nav=document.getElementById('sidebar-nav');
-  nav.innerHTML=`<div class="nav-grupo active" data-store="grupo" onclick="selectStore('grupo')">
-    <span style="font-size:1.1rem">🏢</span> Grupo Servopa
-  </div>`;
+// ── Store picker ──────────────────────────────────────────────────────────────
+function buildPicker(){
+  const list=document.getElementById('picker-list');
+  list.innerHTML=`<div class="picker-item grupo active" data-id="grupo" onclick="selectStore('grupo')">🏢 Grupo Servopa</div>`;
   const brands={};
-  DB.stores.forEach(s=>{(brands[s.brand]=brands[s.brand]||[]).push(s);});
+  DB.stores.forEach(s=>(brands[s.brand]=brands[s.brand]||[]).push(s));
   Object.entries(brands).forEach(([brand,stores])=>{
-    const id='brand-'+brand.replace(/[^a-z0-9]/gi,'-').toLowerCase();
-    nav.innerHTML+=`
-    <div class="nav-brand" onclick="toggleBrand('${id}')">
-      <span>${brand}</span>
-      <span class="cnt">${stores.length}</span>
-    </div>
-    <div class="nav-stores open" id="${id}">
-      ${stores.map(s=>{
-        const h=storeHealth(s);
-        return`<div class="nav-store" data-store="${s.id}" onclick="selectStore('${s.id}')">
-          <span class="nav-dot dot-${h}"></span>${s.city}
-        </div>`;
-      }).join('')}
-    </div>`;
+    list.innerHTML+=`<div class="picker-group">${brand}</div>`;
+    stores.forEach(s=>{
+      const h=storeHealth(s);
+      list.innerHTML+=`<div class="picker-item" data-id="${s.id}" onclick="selectStore('${s.id}')">
+        <span class="nav-dot dot-${h}"></span>${s.name}
+      </div>`;
+    });
   });
 }
 
-function toggleBrand(id){
-  document.getElementById(id).classList.toggle('open');
+function togglePicker(){
+  const dd=document.getElementById('picker-dd');
+  dd.classList.toggle('open');
+  if(dd.classList.contains('open')) document.getElementById('picker-input').focus();
 }
 
-function searchStores(q){
+function filterPicker(q){
   q=q.toLowerCase();
-  document.querySelectorAll('.nav-store').forEach(el=>{
+  document.querySelectorAll('.picker-item:not(.grupo)').forEach(el=>{
     el.style.display=(q===''||el.textContent.toLowerCase().includes(q))?'':'none';
   });
+  document.querySelectorAll('.picker-group').forEach(g=>{
+    const vis=[...g.nextElementSibling?[]:[]];
+    let sib=g.nextElementSibling;
+    let anyVis=false;
+    while(sib&&!sib.classList.contains('picker-group')){
+      if(sib.style.display!=='none') anyVis=true;
+      sib=sib.nextElementSibling;
+    }
+    g.style.display=anyVis||q===''?'':'none';
+  });
 }
 
-// ── Navigation ───────────────────────────────────────────────────────────────
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.sb-picker')) document.getElementById('picker-dd').classList.remove('open');
+});
+
+// ── Area navigation ───────────────────────────────────────────────────────────
+const AREAS=[
+  ['overview',   '🏠', 'Visão Geral'],
+  ['pipeline',   '🔀', 'Pipeline de Vendas'],
+  ['vendas',     '🚗', 'Vendas Geradas'],
+  ['cx',         '⭐', 'CX & Satisfação'],
+  ['estoque',    '📦', 'Estoque'],
+  ['pos-venda',  '🔧', 'Pós-Venda'],
+  ['financeiro', '💰', 'Financeiro'],
+];
+
+function buildNav(){
+  const nav=document.getElementById('sidebar-nav');
+  nav.innerHTML=AREAS.map(([id,ico,label])=>`
+    <div class="nav-area ${id==='overview'?'active':''}" data-area="${id}" onclick="selectArea('${id}')">
+      <span class="ico">${ico}</span>${label}
+    </div>`).join('');
+}
+
+function selectArea(area){
+  activeArea=area;
+  document.querySelectorAll('.nav-area').forEach(el=>
+    el.classList.toggle('active',el.dataset.area===area));
+  const label=AREAS.find(a=>a[0]===area)?.[2]||area;
+  document.getElementById('area-title').textContent=label;
+  renderArea(area);
+}
+
 function selectStore(id){
   activeStore=id;
-  document.querySelectorAll('.nav-grupo,.nav-store').forEach(el=>
-    el.classList.toggle('active',el.dataset.store===id));
+  document.getElementById('picker-dd').classList.remove('open');
+  document.getElementById('picker-input').value='';
+  filterPicker('');
+  document.querySelectorAll('.picker-item').forEach(el=>
+    el.classList.toggle('active',el.dataset.id===id));
   const s=getStore(id);
-  document.getElementById('store-title').textContent=s.name;
+  document.getElementById('picker-btn-label').textContent=s.name;
   document.getElementById('store-sub').textContent=
-    s.city&&s.city!==s.name?s.city+(s.uf?', '+s.uf:''):'';
-  buildTabs(id==='grupo');
-  selectTab('overview');
+    s.city&&s.uf?s.city+', '+s.uf:'';
+  renderArea(activeArea);
 }
 
 function getStore(id){
@@ -333,37 +374,20 @@ function getStore(id){
   return DB.stores.find(s=>s.id===id);
 }
 
-function buildTabs(isGrupo){
-  const tabs=isGrupo
-    ?[['overview','Visão Geral'],['vendas','Vendas'],['cx','CX & Satisfação'],['financeiro','Financeiro']]
-    :[['overview','Visão Geral'],['leads','Leads'],['vendas','Vendas'],
-      ['cx','CX & Satisfação'],['estoque','Estoque'],['pos-venda','Pós-Venda'],['financeiro','Financeiro']];
-  document.getElementById('tabs').innerHTML=
-    tabs.map(([t,l])=>`<button class="tab-btn ${t==='overview'?'active':''}" data-tab="${t}"
-      onclick="selectTab('${t}')">${l}</button>`).join('');
-}
-
-function selectTab(tab){
-  activeTab=tab;
-  document.querySelectorAll('.tab-btn').forEach(el=>
-    el.classList.toggle('active',el.dataset.tab===tab));
-  renderTab(tab);
-}
-
-function renderTab(tab){
+function renderArea(area){
   destroyCharts();
   const s=getStore(activeStore);
   const el=document.getElementById('content');
-  switch(tab){
+  switch(area){
     case'overview':  el.innerHTML=renderOverview(s);    break;
-    case'leads':     el.innerHTML=renderLeads(s.leads); break;
+    case'pipeline':  el.innerHTML=renderLeads(s.leads); break;
     case'vendas':    el.innerHTML=renderVendas(s);      break;
     case'cx':        el.innerHTML=renderCX(s.cx);       break;
     case'estoque':   el.innerHTML=renderEstoque(s);     break;
     case'pos-venda': el.innerHTML=renderPosVenda(s.pos_venda); break;
     case'financeiro':el.innerHTML=renderFinanceiro(s.financeiro); break;
   }
-  requestAnimationFrame(()=>initCharts(tab,s));
+  requestAnimationFrame(()=>initCharts(area,s));
 }
 
 // ── KPI helper ───────────────────────────────────────────────────────────────
@@ -537,8 +561,8 @@ function renderFinanceiro(f){
 }
 
 // ── Chart init ────────────────────────────────────────────────────────────────
-function initCharts(tab,s){
-  switch(tab){
+function initCharts(area,s){
+  switch(area){
     case'overview':
       if(activeStore!=='grupo'){
         const f=s.vendas.funil;
@@ -554,7 +578,7 @@ function initCharts(tab,s){
           options:{cutout:'65%',plugins:{legend:{position:'bottom',labels:{boxWidth:12}}}}});
       }
       break;
-    case'leads':{
+    case'pipeline':{
       const l=s.leads;
       mkChart('ch-leads-funil',{type:'bar',
         data:{labels:Object.keys(l.funil),datasets:[{data:Object.values(l.funil),
@@ -631,8 +655,10 @@ function initCharts(tab,s){
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
-  buildSidebar();
+  buildPicker();
+  buildNav();
   selectStore('grupo');
+  selectArea('overview');
 });
 """
 
@@ -656,19 +682,30 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       <strong>Grupo Servopa</strong>
       <span>Observabilidade · __PERIODO__</span>
     </div>
-    <div class="sb-search">
-      <input type="text" placeholder="Buscar loja..." oninput="searchStores(this.value)">
+
+    <!-- Store picker -->
+    <div class="sb-picker">
+      <div class="picker-btn" onclick="togglePicker()">
+        <span class="store-name" id="picker-btn-label">Grupo Servopa</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="picker-dropdown" id="picker-dd">
+        <div class="picker-search">
+          <input id="picker-input" type="text" placeholder="Buscar loja..."
+            oninput="filterPicker(this.value)">
+        </div>
+        <div class="picker-list" id="picker-list"></div>
+      </div>
     </div>
+
+    <!-- Area nav -->
     <div class="sb-nav" id="sidebar-nav"></div>
   </aside>
 
   <div class="main-wrap">
-    <div class="store-hdr">
-      <div class="store-hdr-top">
-        <h1 id="store-title">Grupo Servopa</h1>
-        <span id="store-sub"></span>
-      </div>
-      <div class="tabs" id="tabs"></div>
+    <div class="main-hdr">
+      <h1 id="area-title">Visão Geral</h1>
+      <span id="store-sub"></span>
     </div>
     <div id="content"></div>
   </div>
